@@ -60,7 +60,7 @@
         <tr v-for="item in search(keywords)" :key="item.id">
           <td>{{ item.id }}</td>
           <td v-text="item.name"></td>
-          <td>{{ item.ctime | dateFormat() }}</td>
+          <td>{{ item.ctime | time }}</td>
           <td>
             <a href="" @click.prevent="del(item.id)">删除</a>
           </td>
@@ -78,6 +78,20 @@
   </div>
 
   <script>
+
+    //订制全局的过滤器
+     Vue.filter('time',function(msg){
+      var dt = new Date(msg)
+        var Y = dt.getFullYear()
+        var M = (dt.getMonth()+1).toString().padStart(2,'0')
+        var D = dt.getDate().toString().padStart(2,'0')
+        var H = dt.getHours().toString().padStart(2,'0')
+        var m = dt.getMinutes().toString().padStart(2,'0')
+        var s = dt.getSeconds().toString().padStart(2,'0')
+
+        return `${Y}-${M}-${D} ${H}:${m}:${s}`
+     })
+
       var vm = new Vue({
           el:'#app',
           data:{
@@ -119,14 +133,18 @@
                     // if (result.name.includes(keywords)) return result
                     return result.name.includes(keywords)
                   })
+              },
 
-
-
-
-
-            }
-
+                    //删除的功能
+               del(id){
+                 //点击获取id
+                  this.list.splice(id-1,1)
+                 
+               }
           }
+
+         
+
       })
   </script>
 </body>
