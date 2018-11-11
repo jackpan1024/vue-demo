@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ msg | timeOut }}</p>
+    </div>
+<script>
+    Vue.filter('timeOut',function(msg){
+        let dt = new Date(msg);
+        let y = dt.getFullYear()
+        let M = (dt.getMonth() +1).toString().padStart(2,'0')
+        let d = dt.getDate().toString().padStart(2,'0')
+        let h = dt.getHours().toString().padStart(2,'0')
+        let s = dt.getSeconds().toString().padStart(2,'0')
+        let m = dt.getMinutes().toString().padStart(2,'0')
+        return `${y}-${M}-${d} ${h}:${m}:${s}`
+        
+    })
+    var vm = new Vue({
+        el: '#app',
+        data: {  
+            msg:new Date()
+        },
+        methods: {}
+    })
+    </script>
+</body>
+</html>
